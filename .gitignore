@@ -1,0 +1,47 @@
+# --- Terraform ---
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+
+# --- Kubernetes / k3s ---
+kubeconfig*
+*.kubeconfig
+k3s.yaml
+node-token
+
+# --- Wazuh ---
+wazuh-install-files.tar
+*.tar
+*.tar.gz
+
+# --- Keys, certs, secrets ---
+*.pem
+*.key
+*.crt
+*.p12
+id_rsa*
+id_ed25519*
+.env
+.env.*
+secrets/
+*secret*.yaml
+
+# --- Ansible ---
+*.retry
+vault-pass*
+.vault_pass
+
+# --- Editor / OS junk ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
