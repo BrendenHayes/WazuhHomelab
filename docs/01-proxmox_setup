@@ -1,0 +1,20 @@
+## Hardware
+
+- **CPU:** AMD Ryzen 5 3600 (6 cores / 12 threads)
+- **RAM:** 32 GB DDR4
+- **Hypervisor:** Proxmox VE
+
+## VM Sizing
+
+| VM | vCPU | RAM | Disk | Why |
+|-------|---|-------|------|-----------------------------------------------------------------|
+| Wazuh | 4 | 8 GB | 50 GB | Runs the manager, indexer and dashboard. The indexer (OpenSearch/Java) is memory-hungry, and alert and log data accumulates on disk. |
+| k3s-cp | 2 | 4 GB | 30 GB | k3s control plane is lightweight; headroom for the Wazuh agent and Falco. |
+| k3s-w1 | 2 | 4 GB | 30 GB | Runs the target workloads (Juice Shop, etc.). |
+| k3s-w2 | 2 | 4 GB | 30 GB | Second worker, to show scheduling across nodes. |
+| Victim | 1 | 2 GB | 20 GB | Simple Ubuntu server with SSH and nginx, used as an attack target. |
+| Kali | 2 | 4 GB | 40 GB | Attacker machine, powered on only during attack sessions. |
+
+|ubuntu Template| 2 | 4 GB | 20 GB | Base Ubuntu 24.04.4 images with updates, SSH and the QEMU guest agent. Used for Wazuh, All Kubernetes VMs, and Victim. Resources are provisioned bare as they can be upgraded later depending on need.
+
+**Sizing approach:** vCPUs are overcommitted (the total exceeds 12 threads) since the VMs are mostly idle, but RAM is not. The total of about 26 GB leaves room for Proxmox itself. Disks are thin-provisioned and can only be grown, never shrunk, so the template started small and each VM was grown as needed.
