@@ -1,0 +1,19 @@
+# Lab Notebook
+
+## 11/2/2026
+
+- Hit "eno1 State DOWN" when initally setting up Proxmox which stopped me from being able
+to connect to the network. Cause: eno1 not attached to vmbr0 stopping port from bridging.
+first tested cable with other device to ensure the cable wasn't bad.
+FIX: ip link set eno1 master vmbr0. Ping default gateway to check for connectivity.
+nano /etc/network/interfaces set bridge-ports eno1 to ensure changes stay.
+
+- Hit "KVM Virtualization configured, but not available". Cause: SVM Mode disabled in BIOS. 
+FIX: enabled SVM
+
+- Built Proxmox Template and cloned for nodes
+
+- Install wazuh on wazuh instance and checked for connectivity
+
+- Changed hostnames for each template and gave static IPs. Hit: Issues with certain devices
+on the network already using the IPs (10.0.0.70-10.0.0.75). *TODO* Fix: Will have to renew their DHCP lease so they get a new IP and statically change the others.
